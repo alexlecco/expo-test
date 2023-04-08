@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   StyleSheet,
   TouchableHighlight,
@@ -6,13 +6,21 @@ import {
   Text,
 } from 'react-native'
 
-const FollowButton = () => (
-  <TouchableHighlight>
-    <View style={styles.buttonContainer}>
-      <Text>follow</Text>
-    </View>
-  </TouchableHighlight>
-)
+const FollowButton = _ => {
+  const [isFollowing, setIsFollowing] = useState(false)
+
+  const switchFollow = _ => {
+    setIsFollowing(!isFollowing)
+  }
+
+  return (
+    <TouchableHighlight onPress={switchFollow}>
+      <View style={styles.buttonContainer}>
+        <Text>{ isFollowing ? 'following' : 'follow' }</Text>
+      </View>
+    </TouchableHighlight>
+  )
+}
 
 const styles = StyleSheet.create({
   buttonContainer: {
