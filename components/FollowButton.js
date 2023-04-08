@@ -1,23 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, } from 'react'
 import {
   StyleSheet,
   TouchableHighlight,
-  View,
   Text,
+  Animated,
 } from 'react-native'
 
 const FollowButton = _ => {
   const [isFollowing, setIsFollowing] = useState(false)
 
+  const resizeAnim = useRef(new Animated.Value(61)).current
+
   const switchFollow = _ => {
-    setIsFollowing(!isFollowing)
+    Animated.timing(resizeAnim, {
+      toValue: isFollowing ? 65 : 80,
+      duration: 300,
+      useNativeDriver: false
+    }).start(() => setIsFollowing(prev => !prev))
   }
 
   return (
     <TouchableHighlight onPress={switchFollow}>
-      <View style={styles.buttonContainer}>
-        <Text>{ isFollowing ? 'following' : 'follow' }</Text>
-      </View>
+      <Animated.View style={[styles.buttonContainer, { width: resizeAnim }]}>
+        {/* <Text>follow{ isFollowing && 'ing' }</Text> */}
+        <Text>follow</Text>
+      </Animated.View>
     </TouchableHighlight>
   )
 }
