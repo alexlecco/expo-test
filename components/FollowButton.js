@@ -9,24 +9,32 @@ import {
 const FollowButton = _ => {
   const [isFollowing, setIsFollowing] = useState(false)
   const [textCompletition, setTextCompletition] = useState('')
+  const [buttonAvailability, setButtonAvailability] = useState(true)
   const animationTime = 300
   const resizeAnim = useRef(new Animated.Value(61)).current
 
   useEffect(() => {
-    isFollowing ? setTextCompletition("ing") : setTextCompletition("")
+    const text = isFollowing ? 'ing' : ''
+    setTextCompletition(text)
   }, [isFollowing])
 
   const switchFollow = _ => {
-    setTextCompletition("")
+    setButtonAvailability(false)
+    setTextCompletition('')
     Animated.timing(resizeAnim, {
-      toValue: isFollowing ? 65 : 80,
+      toValue: isFollowing ? 61 : 80,
       duration: animationTime,
       useNativeDriver: false
-    }).start(() => setIsFollowing(prev => !prev))
+    }).start(() => {
+      setIsFollowing(prev => !prev)
+      setButtonAvailability(true)
+    })
   }
 
+  console.log(buttonAvailability)
+
   return (
-    <TouchableHighlight onPress={switchFollow}>
+    <TouchableHighlight onPress={switchFollow} disabled={!buttonAvailability}>
       <Animated.View style={[styles.buttonContainer, { width: resizeAnim }]}>
         <Text>follow{textCompletition}</Text>
       </Animated.View>
