@@ -31,10 +31,12 @@ const FollowButton = _ => {
     })
   }
 
-  console.log(buttonAvailability)
-
   return (
-    <TouchableHighlight onPress={switchFollow} disabled={!buttonAvailability}>
+    <TouchableHighlight
+      onPress={switchFollow}
+      disabled={!buttonAvailability}
+      underlayColor={'#fff'}
+    >
       <Animated.View style={[styles.buttonContainer, { width: resizeAnim }]}>
         <Text>follow{textCompletition}</Text>
       </Animated.View>
